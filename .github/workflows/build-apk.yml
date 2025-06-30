@@ -22,7 +22,7 @@ jobs:
           npm install -g yarn
           npm install -g eas-cli
 
-      - name: 📦 Instalar dependências do projeto
+      - name: 📦 Instalar dependências
         run: yarn install
 
       - name: 🚀 Build APK com EAS
