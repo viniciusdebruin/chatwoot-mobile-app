@@ -2,7 +2,7 @@ name: Build APK - deBruin Chat
 
 on:
   push:
-    branches: [develop]  # ou "main" se você estiver usando main
+    branches: [develop]
 
 jobs:
   build:
@@ -17,18 +17,20 @@ jobs:
         with:
           node-version: 18
 
-      - name: 🧶 Instalar Yarn
-        run: npm install -g yarn
+      - name: 🧶 Instalar Yarn e EAS CLI
+        run: |
+          npm install -g yarn
+          npm install -g eas-cli
 
-      - name: 📦 Instalar dependências
+      - name: 📦 Instalar dependências do projeto
         run: yarn install
 
       - name: 🔑 Verificar autenticação Expo
-        run: npx eas whoami
+        run: eas whoami
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
-      - name: 🚀 Build APK com EAS
-        run: npx eas build --platform android --profile preview --non-interactive
+      - name: 📤 Build APK com EAS
+        run: eas build --platform android --profile preview --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
