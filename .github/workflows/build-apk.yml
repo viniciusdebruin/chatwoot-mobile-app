@@ -25,12 +25,7 @@ jobs:
       - name: 📦 Instalar dependências do projeto
         run: yarn install
 
-      - name: 🔑 Verificar autenticação Expo
-        run: eas whoami
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-
-      - name: 📤 Build APK com EAS
+      - name: 🚀 Build APK com EAS
         run: eas build --platform android --profile preview --non-interactive
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
