@@ -2,25 +2,33 @@ name: Build APK - deBruin Chat
 
 on:
   push:
-    branches: [develop]
+    branches: [develop]  # ou "main" se você estiver usando main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
+      - name: ⬇️ Checkout do repositório
         uses: actions/checkout@v3
 
-      - name: Setup Expo + EAS
-        uses: expo/expo-github-action@v8
+      - name: ⚙️ Configurar Node.js
+        uses: actions/setup-node@v3
         with:
-          expo-version: latest
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
+          node-version: 18
 
-      - name: Instalar dependências
+      - name: 🧶 Instalar Yarn
+        run: npm install -g yarn
+
+      - name: 📦 Instalar dependências
         run: yarn install
 
-      - name: Build APK
-        run: eas build --platform android --profile preview --non-interactive
+      - name: 🔑 Verificar autenticação Expo
+        run: npx eas whoami
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+      - name: 🚀 Build APK com EAS
+        run: npx eas build --platform android --profile preview --non-interactive
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
